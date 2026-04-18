@@ -1,0 +1,21 @@
+services:
+  server:
+    build: ./server
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./server/.env
+    volumes:
+      - task_uploads:/app/uploads
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+volumes:
+  task_uploads:
